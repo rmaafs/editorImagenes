@@ -17,6 +17,8 @@ class FiltrosActivity : AppCompatActivity() {
 
     private lateinit var btnRegresar: Button
     private lateinit var btnGuardar: Button
+    private lateinit var btnDeshacer: Button
+    private lateinit var btnAceptar: Button
     private lateinit var imgFoto: ImageView
     private lateinit var layoutContainer : LinearLayout;
 
@@ -28,17 +30,35 @@ class FiltrosActivity : AppCompatActivity() {
 
         btnRegresar = findViewById(R.id.btnRegresar)
         btnGuardar = findViewById(R.id.btnGuardar)
+        btnDeshacer = findViewById(R.id.btnDeshacer)
+        btnAceptar = findViewById(R.id.btnAceptar)
         imgFoto = findViewById(R.id.imgFoto)
         layoutContainer = findViewById(R.id.layoutContainer)
 
         imgFoto.setImageURI(Uri.parse(strUser))
 
-        val bitmapOriginal : Bitmap = (imgFoto.getDrawable() as BitmapDrawable).bitmap.copy((imgFoto.getDrawable() as BitmapDrawable).bitmap.config, true)
+        //Guardará la imagen previa antes de meter el próximo filtro
+        var bitmapUndo : Bitmap = (imgFoto.getDrawable() as BitmapDrawable).bitmap.copy((imgFoto.getDrawable() as BitmapDrawable).bitmap.config, true)
+        //Guardará la imagen tal y como cuando la seleccionó de la galeria o desde la cámara
+        var bitmapOriginal : Bitmap = (imgFoto.getDrawable() as BitmapDrawable).bitmap.copy((imgFoto.getDrawable() as BitmapDrawable).bitmap.config, true)
 
+        //Regresamos al main
         btnRegresar.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java));
         }
 
+        //Botón para "Deshacer"
+        btnDeshacer.setOnClickListener {
+            imgFoto.setImageBitmap(bitmapOriginal)//Cambiará el BitMap al que guardó ultimamente
+        }
+
+        //Botón para "Aceptar"
+        btnAceptar.setOnClickListener {
+            bitmapUndo = (imgFoto.getDrawable() as BitmapDrawable).bitmap.copy((imgFoto.getDrawable() as BitmapDrawable).bitmap.config, true)
+            Toast.makeText(this, "Filtro guardado.", Toast.LENGTH_SHORT).show()
+        }
+
+        //Añadimos nuestro arreglo de filtros que usará la app
         var filtros = arrayOf(FiltroControlador(this).setFiltro(FiltroNegativo()),
             FiltroControlador(this).setFiltro(FiltroGrises()),
             FiltroControlador(this).setFiltro(FiltroBrillo()),
@@ -49,13 +69,14 @@ class FiltrosActivity : AppCompatActivity() {
             FiltroControlador(this).setFiltro(FiltroSeparacionAzul())
             )
 
+        //Ciclamos todo el arreglo
         for (filtro in filtros) {
-            layoutContainer.addView(filtro.getLayout())
+            layoutContainer.addView(filtro.getLayout())//Lo añadimos al HorizontalScrollView
             filtro.setOnClickFiltroListener {
                 Toast.makeText(this, "Filtro ${it} aplicado", Toast.LENGTH_SHORT).show()
 
-                imgFoto.setImageBitmap(bitmapOriginal)
-                imgFoto.setImageBitmap(filtro.convertImg(imgFoto))
+                imgFoto.setImageBitmap(bitmapUndo)//Usamos la imagen previa
+                imgFoto.setImageBitmap(filtro.convertImg(imgFoto))//Le añadimos el efecto seleccionado
             }
         }
 
