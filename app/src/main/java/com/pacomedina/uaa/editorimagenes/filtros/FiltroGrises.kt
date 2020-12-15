@@ -28,9 +28,14 @@ class FiltroGrises : Filtro {
         for (y in 0 until pich) {
             for (x in 0 until picw) {
                 val index: Int = y * picw + x
-                val R = pix[index] shr 16 and 0xff
-                val G = pix[index] shr 8 and 0xff
-                val B = pix[index] and 0xff
+                var R = pix[index] shr 16 and 0xff
+                var G = pix[index] shr 8 and 0xff
+                var B = pix[index] and 0xff
+
+                var grises = ((.299 * R + .587 * G + .114 * B).toInt())
+                R = grises
+                G = grises
+                B = grises
 
                 pix[index] = -0x1000000 or (R shl 16) or (G shl 8) or B
             }
