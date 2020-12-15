@@ -1,6 +1,8 @@
 package com.pacomedina.uaa.editorimagenes
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
@@ -31,6 +33,8 @@ class FiltrosActivity : AppCompatActivity() {
 
         imgFoto.setImageURI(Uri.parse(strUser))
 
+        val bitmapOriginal : Bitmap = (imgFoto.getDrawable() as BitmapDrawable).bitmap.copy((imgFoto.getDrawable() as BitmapDrawable).bitmap.config, true)
+
         btnRegresar.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java));
         }
@@ -50,6 +54,7 @@ class FiltrosActivity : AppCompatActivity() {
             filtro.setOnClickFiltroListener {
                 Toast.makeText(this, "Filtro ${it} aplicado", Toast.LENGTH_SHORT).show()
 
+                imgFoto.setImageBitmap(bitmapOriginal)
                 imgFoto.setImageBitmap(filtro.convertImg(imgFoto))
             }
         }
