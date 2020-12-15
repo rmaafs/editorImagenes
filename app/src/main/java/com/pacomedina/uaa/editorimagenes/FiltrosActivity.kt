@@ -49,8 +49,11 @@ class FiltrosActivity : AppCompatActivity() {
             layoutContainer.addView(filtro.getLayout())
             filtro.setOnClickFiltroListener {
                 Toast.makeText(this, "Filtro ${it} aplicado", Toast.LENGTH_SHORT).show()
+
+                imgFoto.setImageBitmap(filtro.convertImg(imgFoto))
             }
         }
+
     }
 
 }

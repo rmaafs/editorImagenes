@@ -1,6 +1,7 @@
 package com.pacomedina.uaa.editorimagenes
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -49,7 +50,6 @@ class FiltroControlador : LinearLayout {
     fun asignarEventos() {
         this.imgFoto.setOnClickListener {
             listener?.onClickFiltro(txtTexto.text.toString())
-            filtro.click()
         }
     }
 
@@ -60,8 +60,11 @@ class FiltroControlador : LinearLayout {
         return this
     }
 
-
     fun getLayout() : LinearLayout {
         return this
+    }
+
+    fun convertImg(foto: ImageView) : Bitmap {
+        return filtro.click(foto)
     }
 }
