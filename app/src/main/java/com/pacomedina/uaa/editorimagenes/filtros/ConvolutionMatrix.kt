@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 
 
-class ConvolutionMatrix(i: Int) {
+class ConvolutionMatrix {
 
     val SIZE = 3
 
@@ -12,7 +12,7 @@ class ConvolutionMatrix(i: Int) {
     var Factor = 1.0
     var Offset = 1.0
 
-    fun ConvolutionMatrix(size: Int) {
+    constructor(size: Int) {
         Matrix = Array(size) { DoubleArray(size) }
     }
 
@@ -32,10 +32,9 @@ class ConvolutionMatrix(i: Int) {
         }
     }
 
-    public fun computeConvolution3x3(src: Bitmap, matrix: ConvolutionMatrix): Bitmap {
-        val width = src.width
-        val height = src.height
-        val result = Bitmap.createBitmap(width, height, src.config)
+    fun computeConvolution3x3(result: Bitmap, matrix: ConvolutionMatrix): Bitmap {
+        val width = result.width
+        val height = result.height
         var A: Int
         var R: Int
         var G: Int
@@ -51,7 +50,7 @@ class ConvolutionMatrix(i: Int) {
                 // get pixel matrix
                 for (i in 0 until SIZE) {
                     for (j in 0 until SIZE) {
-                        pixels[i][j] = src.getPixel(x + i, y + j)
+                        pixels[i][j] = result.getPixel(x + i, y + j)
                     }
                 }
 
@@ -66,9 +65,15 @@ class ConvolutionMatrix(i: Int) {
                 // get sum of RGB on matrix
                 for (i in 0 until SIZE) {
                     for (j in 0 until SIZE) {
-                        sumR += (Color.red(pixels[i][j]) * matrix.Matrix.get(i).get(j)).toInt()
-                        sumG += (Color.green(pixels[i][j]) * matrix.Matrix.get(i).get(j)).toInt()
-                        sumB += (Color.blue(pixels[i][j]) * matrix.Matrix.get(i).get(j)).toInt()
+                        sumR += (Color.red(
+                            pixels[i][j]
+                        ) * matrix.Matrix[i][j]).toInt()
+                        sumG += (Color.green(
+                            pixels[i][j]
+                        ) * matrix.Matrix[i][j]).toInt()
+                        sumB += (Color.blue(
+                            pixels[i][j]
+                        ) * matrix.Matrix[i][j]).toInt()
                     }
                 }
 

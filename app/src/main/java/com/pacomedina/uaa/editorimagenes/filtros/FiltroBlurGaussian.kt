@@ -8,27 +8,45 @@ import com.pacomedina.uaa.editorimagenes.R
 class FiltroBlurGaussian : Filtro {
 
     override fun getNombre(): String {
-        return "Brillo"
+        return "Gaussian Blur"
     }
 
     override fun getImagen(): Int {
-        return R.drawable.brillo
+        return R.drawable.blur_gaussian
     }
 
     override fun click(img: ImageView) : Bitmap {
         val oldBitmap = (img.getDrawable() as BitmapDrawable).bitmap
         val bitmap : Bitmap = oldBitmap.copy(oldBitmap.config, true)
-        val GaussianBlurConfig = arrayOf(
+//        val GaussianBlurConfig = arrayOf(
+//            doubleArrayOf(1.0, 2.0, 1.0),
+//            doubleArrayOf(2.0, 4.0, 2.0),
+//            doubleArrayOf(1.0, 2.0, 1.0)
+//        )
+//        val convMatrix = ConvolutionMatrix(3)
+//        convMatrix.applyConfig(GaussianBlurConfig)
+//        convMatrix.Factor = 16.0
+//        convMatrix.Offset = 0.0
+//
+//        return convMatrix.computeConvolution3x3(bitmap, convMatrix)
+
+        val matrix = ConvolutionMatrix(3)
+        val config = arrayOf(
             doubleArrayOf(1.0, 2.0, 1.0),
             doubleArrayOf(2.0, 4.0, 2.0),
             doubleArrayOf(1.0, 2.0, 1.0)
         )
-        val convMatrix = ConvolutionMatrix(3)
-        convMatrix.applyConfig(GaussianBlurConfig)
-        convMatrix.Factor = 200.0
-        convMatrix.Offset = 0.0
+        matrix.applyConfig(config)
+        matrix.Factor = 16.0
+        matrix.Offset = 0.0
+        return matrix.computeConvolution3x3(bitmap, matrix)
 
-        return convMatrix.computeConvolution3x3(bitmap, convMatrix)
+//        val m = ConvolutionMatrix(3)
+//        m.setAll(1)
+//        m.Factor = 1 + 8
+////        m.
+//
+//        return m.computeConvolution3x3(bitmap, m)
 
 //        val oldBitmap = (img.getDrawable() as BitmapDrawable).bitmap
 //        var picw : Int = oldBitmap.width
