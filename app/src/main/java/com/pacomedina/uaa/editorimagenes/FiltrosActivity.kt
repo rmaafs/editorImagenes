@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.pacomedina.uaa.editorimagenes.filtros.*
 
 
 class FiltrosActivity : AppCompatActivity() {
@@ -33,13 +35,22 @@ class FiltrosActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java));
         }
 
+        var filtros = arrayOf(FiltroControlador(this).setFiltro(FiltroNegativo()),
+            FiltroControlador(this).setFiltro(FiltroGrises()),
+            FiltroControlador(this).setFiltro(FiltroBrillo()),
+            FiltroControlador(this).setFiltro(FiltroContraste()),
+            FiltroControlador(this).setFiltro(FiltroGamma()),
+            FiltroControlador(this).setFiltro(FiltroSeparacionRojo()),
+            FiltroControlador(this).setFiltro(FiltroSeparacionVerde()),
+            FiltroControlador(this).setFiltro(FiltroSeparacionAzul())
+            )
 
-        val filtro1 = FiltroControlador(this)
-        filtro1.setFiltro("asd", "Positivo")
-
-        layoutContainer.addView(filtro1)
-
-        layoutContainer.addView(FiltroControlador(this).setFiltro("asd", "Negativo"))
+        for (filtro in filtros) {
+            layoutContainer.addView(filtro.getLayout())
+            filtro.setOnClickFiltroListener {
+                Toast.makeText(this, "Filtro ${it} aplicado", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 }

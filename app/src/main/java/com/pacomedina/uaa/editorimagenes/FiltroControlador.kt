@@ -1,18 +1,19 @@
 package com.pacomedina.uaa.editorimagenes
 
 import android.content.Context
-import android.net.Uri
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.pacomedina.uaa.editorimagenes.filtros.Filtro
 
 class FiltroControlador : LinearLayout {
 
     private lateinit var txtTexto : TextView;
     private lateinit var imgFoto : ImageView;
+    private lateinit var filtro : Filtro;
 
     constructor(ctx: Context) : super(ctx) {
         inicializar();
@@ -37,24 +38,30 @@ class FiltroControlador : LinearLayout {
     }
 
     var listener : onClickFiltroListener? = null;
-    fun setOnClickTeclaListener(aplicarFiltro: (String) -> Unit) {
+    fun setOnClickFiltroListener(click: (String) -> Unit) {
         listener = object:onClickFiltroListener {
             override fun onClickFiltro(filtro: String) {
-                aplicarFiltro(filtro)
+                click(filtro)
             }
         }
     }
 
     fun asignarEventos() {
-        imgFoto.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+        this.imgFoto.setOnClickListener {
             listener?.onClickFiltro(txtTexto.text.toString())
-            false
-        })
+            filtro.click()
+        }
     }
 
-    public fun setFiltro(uri: String, nombre: String) : LinearLayout {
-        imgFoto.setImageURI(Uri.parse(uri))
-        txtTexto.setText(nombre)
+    fun setFiltro(filtro: Filtro) : FiltroControlador {
+        this.filtro = filtro
+        imgFoto.setImageResource(filtro.getImagen())
+        txtTexto.setText(filtro.getNombre())
+        return this
+    }
+
+
+    fun getLayout() : LinearLayout {
         return this
     }
 }
