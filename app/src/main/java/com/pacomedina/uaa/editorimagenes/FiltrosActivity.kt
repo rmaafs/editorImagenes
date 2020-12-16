@@ -78,11 +78,6 @@ class FiltrosActivity : AppCompatActivity() {
 
         //Añadimos nuestro arreglo de filtros que usará la app
         var filtros = arrayOf(
-            FiltroControlador(this).setFiltro(FiltroSeparacionMacabro()),
-            FiltroControlador(this).setFiltro(FiltroSeparacionArreglarBlancos()),
-            FiltroControlador(this).setFiltro(FiltroSeparacionArreglarNegros()),
-            FiltroControlador(this).setFiltro(FiltroSeparacionPixeleado()),
-            FiltroControlador(this).setFiltro(FiltroSeparacionPantallaRota()),
             FiltroControlador(this).setFiltro(FiltroNegativo()),
             FiltroControlador(this).setFiltro(FiltroGrises()),
             FiltroControlador(this).setFiltro(FiltroBrillo()),
@@ -90,7 +85,12 @@ class FiltrosActivity : AppCompatActivity() {
             FiltroControlador(this).setFiltro(FiltroGamma()),
             FiltroControlador(this).setFiltro(FiltroSeparacionRojo()),
             FiltroControlador(this).setFiltro(FiltroSeparacionVerde()),
-            FiltroControlador(this).setFiltro(FiltroSeparacionAzul())
+            FiltroControlador(this).setFiltro(FiltroSeparacionAzul()),
+            FiltroControlador(this).setFiltro(FiltroSeparacionMacabro()),
+            FiltroControlador(this).setFiltro(FiltroSeparacionArreglarBlancos()),
+            FiltroControlador(this).setFiltro(FiltroSeparacionArreglarNegros()),
+            FiltroControlador(this).setFiltro(FiltroSeparacionPixeleado()),
+            FiltroControlador(this).setFiltro(FiltroSeparacionPantallaRota())
 
 //            FiltroControlador(this).setFiltro(FiltroZoomIn())
 //            FiltroControlador(this).setFiltro(FiltroBlurGaussian())
