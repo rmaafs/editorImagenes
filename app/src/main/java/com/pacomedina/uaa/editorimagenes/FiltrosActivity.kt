@@ -85,7 +85,8 @@ class FiltrosActivity : AppCompatActivity() {
             FiltroControlador(this).setFiltro(FiltroGamma()),
             FiltroControlador(this).setFiltro(FiltroSeparacionRojo()),
             FiltroControlador(this).setFiltro(FiltroSeparacionVerde()),
-            FiltroControlador(this).setFiltro(FiltroSeparacionAzul())
+            FiltroControlador(this).setFiltro(FiltroSeparacionAzul()),
+            FiltroControlador(this).setFiltro(FiltroZoomIn())
 //            FiltroControlador(this).setFiltro(FiltroBlurGaussian())
         )
 
