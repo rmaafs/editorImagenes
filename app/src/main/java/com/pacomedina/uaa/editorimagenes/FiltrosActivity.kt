@@ -78,6 +78,8 @@ class FiltrosActivity : AppCompatActivity() {
 
         //Añadimos nuestro arreglo de filtros que usará la app
         var filtros = arrayOf(
+            FiltroControlador(this).setFiltro(FiltroSeparacionArreglarNegros()),
+            FiltroControlador(this).setFiltro(FiltroSeparacionPixeleado()),
             FiltroControlador(this).setFiltro(FiltroSeparacionPantallaRota()),
             FiltroControlador(this).setFiltro(FiltroNegativo()),
             FiltroControlador(this).setFiltro(FiltroGrises()),
