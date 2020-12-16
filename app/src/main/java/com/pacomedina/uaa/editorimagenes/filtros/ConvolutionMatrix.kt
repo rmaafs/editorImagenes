@@ -1,112 +1,77 @@
 package com.pacomedina.uaa.editorimagenes.filtros
 
 import android.graphics.Bitmap
-import android.graphics.Color
 
 
 class ConvolutionMatrix {
 
     val SIZE = 3
+    var matriz: Array<DoubleArray> = Array(SIZE) { DoubleArray(SIZE) }
+    var Factor = 1
+    var Offset = 1
 
-    lateinit var Matrix: Array<DoubleArray>
-    var Factor = 1.0
-    var Offset = 1.0
-
-    constructor(size: Int) {
-        Matrix = Array(size) { DoubleArray(size) }
-    }
-
-    fun setAll(value: Double) {
-        for (x in 0 until SIZE) {
-            for (y in 0 until SIZE) {
-                Matrix[x][y] = value
-            }
-        }
-    }
 
     fun applyConfig(config: Array<DoubleArray>) {
         for (x in 0 until SIZE) {
             for (y in 0 until SIZE) {
-                Matrix[x][y] = config[x][y]
+                matriz[x][y] = config[x][y]
             }
         }
     }
 
-    fun computeConvolution3x3(result: Bitmap, matrix: ConvolutionMatrix): Bitmap {
-        val width = result.width
-        val height = result.height
-        var A: Int
-        var R: Int
-        var G: Int
-        var B: Int
-        var sumR: Int
-        var sumG: Int
-        var sumB: Int
-        val pixels =
-            Array(SIZE) { IntArray(SIZE) }
-        for (y in 0 until height - 2) {
-            for (x in 0 until width - 2) {
+    fun maps(result: Bitmap) : Bitmap {
+        var picw : Int = result.width
+        var pich : Int = result.height
+        val bitmap : Bitmap = result.copy(result.config, true)
+        val pix = IntArray(picw * pich)
+        bitmap.getPixels(pix, 0, picw, 0, 0, picw, pich)
 
-                // get pixel matrix
-                for (i in 0 until SIZE) {
-                    for (j in 0 until SIZE) {
-                        pixels[i][j] = result.getPixel(x + i, y + j)
+        var sumaR = 0
+        var sumaG = 0
+        var sumaB = 0
+        var index = 0
+        var R = 0
+        var G = 0
+        var B = 0
+
+        for (x in 1 until picw - 1) {
+            for (y in 1 until pich - 1) {
+
+                sumaR = 0
+                sumaG = 0
+                sumaB = 0
+                for (i in -1 until 2) {
+                    for (j in -1 until 2) {
+                        index = (y + j) * picw + (x + i)
+                        sumaR += ((pix[index] shr 16 and 0xff) * matriz[i + 1][j + 1]).toInt()
+                        sumaG += ((pix[index] shr 8 and 0xff) * matriz[i + 1][j + 1]).toInt()
+                        sumaB += ((pix[index] and 0xff) * matriz[i + 1][j + 1]).toInt()
                     }
                 }
 
-                // get alpha of center pixel
-                A = Color.alpha(pixels[1][1])
+                index = (y) * picw + (x)
+                R = validarValor(sumaR)
+                G = validarValor(sumaG)
+                B = validarValor(sumaB)
 
-                // init color sum
-                sumB = 0
-                sumG = sumB
-                sumR = sumG
-
-                // get sum of RGB on matrix
-                for (i in 0 until SIZE) {
-                    for (j in 0 until SIZE) {
-                        sumR += (Color.red(
-                            pixels[i][j]
-                        ) * matrix.Matrix[i][j]).toInt()
-                        sumG += (Color.green(
-                            pixels[i][j]
-                        ) * matrix.Matrix[i][j]).toInt()
-                        sumB += (Color.blue(
-                            pixels[i][j]
-                        ) * matrix.Matrix[i][j]).toInt()
-                    }
-                }
-
-                // get final Red
-                R = (sumR / matrix.Factor + matrix.Offset).toInt()
-                if (R < 0) {
-                    R = 0
-                } else if (R > 255) {
-                    R = 255
-                }
-
-                // get final Green
-                G = (sumG / matrix.Factor + matrix.Offset).toInt()
-                if (G < 0) {
-                    G = 0
-                } else if (G > 255) {
-                    G = 255
-                }
-
-                // get final Blue
-                B = (sumB / matrix.Factor + matrix.Offset).toInt()
-                if (B < 0) {
-                    B = 0
-                } else if (B > 255) {
-                    B = 255
-                }
-
-                // apply new pixel
-                result.setPixel(x + 1, y + 1, Color.argb(A, R, G, B))
+                pix[index] = -0x1000000 or (R shl 16) or (G shl 8) or B
             }
         }
 
-        // final image
-        return result
+        bitmap.setPixels(pix, 0, picw, 0, 0, picw, pich);
+        return bitmap
+    }
+
+    private fun validarValor(sumatoria: Int) : Int {
+        var suma = sumatoria / Factor + Offset
+        if (suma < 0.0) {
+            suma = -suma
+        }
+        if (suma < 0) {
+            suma = 0
+        } else if (suma > 255) {
+            suma = 255
+        }
+        return suma
     }
 }

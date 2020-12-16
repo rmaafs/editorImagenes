@@ -1,5 +1,6 @@
 package com.pacomedina.uaa.editorimagenes
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -19,6 +20,11 @@ import java.io.FileOutputStream
 
 class FiltrosActivity : AppCompatActivity() {
 
+    companion object {
+        var appContext: Context? = null
+            private set
+    }
+
     private lateinit var btnRegresar: Button
     private lateinit var btnGuardar: Button
     private lateinit var btnDeshacer: Button
@@ -29,6 +35,8 @@ class FiltrosActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.filtros)
+
+        appContext = this
 
         var strUser: String? = intent.getStringExtra("imagen")
 
@@ -90,10 +98,10 @@ class FiltrosActivity : AppCompatActivity() {
             FiltroControlador(this).setFiltro(FiltroSeparacionArreglarBlancos()),
             FiltroControlador(this).setFiltro(FiltroSeparacionArreglarNegros()),
             FiltroControlador(this).setFiltro(FiltroSeparacionPixeleado()),
-            FiltroControlador(this).setFiltro(FiltroSeparacionPantallaRota())
+            FiltroControlador(this).setFiltro(FiltroSeparacionPantallaRota()),
 
 //            FiltroControlador(this).setFiltro(FiltroZoomIn())
-//            FiltroControlador(this).setFiltro(FiltroBlurGaussian())
+            FiltroControlador(this).setFiltro(FiltroBlurGaussian())
         )
 
         //Ciclamos todo el arreglo
