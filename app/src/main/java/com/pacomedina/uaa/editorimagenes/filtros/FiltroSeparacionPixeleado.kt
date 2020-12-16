@@ -13,7 +13,7 @@ class FiltroSeparacionPixeleado : Filtro {
     }
 
     override fun getImagen(): Int {
-        return R.drawable.pantalla_rota
+        return R.drawable.pixeleado
     }
 
     override fun click(img: ImageView) : Bitmap {

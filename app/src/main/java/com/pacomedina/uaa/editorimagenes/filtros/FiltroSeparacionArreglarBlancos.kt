@@ -6,14 +6,14 @@ import android.graphics.drawable.BitmapDrawable
 import android.widget.ImageView
 import com.pacomedina.uaa.editorimagenes.R
 
-class FiltroSeparacionArreglarNegros : Filtro {
+class FiltroSeparacionArreglarBlancos : Filtro {
 
     override fun getNombre(): String {
-        return "Arreglar negros"
+        return "Arreglar blancos"
     }
 
     override fun getImagen(): Int {
-        return R.drawable.arreglar_negros
+        return R.drawable.arreglar_blancos
     }
 
     override fun click(img: ImageView) : Bitmap {
@@ -25,7 +25,7 @@ class FiltroSeparacionArreglarNegros : Filtro {
         val pix = IntArray(picw * pich)
         bitmap.getPixels(pix, 0, picw, 0, 0, picw, pich)
 
-        val negros = 50
+        val negros = 200
 
         for (y in 0 until pich) {
             for (x in 0 until picw) {
@@ -34,10 +34,10 @@ class FiltroSeparacionArreglarNegros : Filtro {
                 var G = pix[index] shr 8 and 0xff
                 var B = pix[index] and 0xff
 
-                if (R < negros && G < negros && B < negros) {
-                    R /= 10
-                    G /= 10
-                    B /= 10
+                if (R > negros && G > negros && B > negros) {
+                    R = 255
+                    G = 255
+                    B = 255
                 }
 
                 pix[index] = -0x1000000 or (R shl 16) or (G shl 8) or B
