@@ -5,6 +5,14 @@ import android.graphics.Bitmap
 
 class ConvolutionMatrix {
 
+    /**
+     * Referencias:
+     * https://www.youtube.com/watch?v=8rrHTtUzyZA&ab_channel=TheJuliaProgrammingLanguage
+     * https://ramok.tech/2018/09/27/convolution-in-java/
+     * https://ai.stanford.edu/~syyeung/cvweb/tutorial1.html
+     * https://www.codeproject.com/Articles/2008/Image-Processing-for-Dummies-with-C-and-GDI-Part-2
+     */
+
     val SIZE = 3
     var matriz: Array<DoubleArray> = Array(SIZE) { DoubleArray(SIZE) }
     var Factor = 1
