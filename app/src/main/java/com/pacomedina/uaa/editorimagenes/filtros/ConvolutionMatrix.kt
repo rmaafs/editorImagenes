@@ -14,12 +14,12 @@ class ConvolutionMatrix {
      */
 
     val SIZE = 3
-    var matriz: Array<DoubleArray> = Array(SIZE) { DoubleArray(SIZE) }
+    var matriz: Array<IntArray> = Array(SIZE) { IntArray(SIZE) }
     var Factor = 1
     var Offset = 1
 
 
-    fun applyConfig(config: Array<DoubleArray>) {
+    fun applyConfig(config: Array<IntArray>) {
         for (x in 0 until SIZE) {
             for (y in 0 until SIZE) {
                 matriz[x][y] = config[x][y]
@@ -51,9 +51,9 @@ class ConvolutionMatrix {
                 for (i in -1 until 2) {
                     for (j in -1 until 2) {
                         index = (y + j) * picw + (x + i)
-                        sumaR += ((pix[index] shr 16 and 0xff) * matriz[i + 1][j + 1]).toInt()
-                        sumaG += ((pix[index] shr 8 and 0xff) * matriz[i + 1][j + 1]).toInt()
-                        sumaB += ((pix[index] and 0xff) * matriz[i + 1][j + 1]).toInt()
+                        sumaR += (pix[index] shr 16 and 0xff) * matriz[i + 1][j + 1]
+                        sumaG += (pix[index] shr 8 and 0xff) * matriz[i + 1][j + 1]
+                        sumaB += (pix[index] and 0xff) * matriz[i + 1][j + 1]
                     }
                 }
 

@@ -5,10 +5,10 @@ import android.graphics.drawable.BitmapDrawable
 import android.widget.ImageView
 import com.pacomedina.uaa.editorimagenes.R
 
-class FiltroBlurGaussian : Filtro {
+class FiltroBlurSharpen : Filtro {
 
     override fun getNombre(): String {
-        return "Gaussian Blur"
+        return "Sharpen"
     }
 
     override fun getImagen(): Int {
@@ -21,12 +21,12 @@ class FiltroBlurGaussian : Filtro {
 
         val matrix = ConvolutionMatrix()
         val config = arrayOf(
-            intArrayOf(1, 2, 1),
-            intArrayOf(2, 4, 2),
-            intArrayOf(1, 2, 1)
+            intArrayOf(0, -2, 0),
+            intArrayOf(-2, 11, -2),
+            intArrayOf(0, -2, 0)
         )
         matrix.applyConfig(config)
-        matrix.Factor = 16
+        matrix.Factor = 3
         matrix.Offset = 0
         return matrix.maps(bitmap)
     }
