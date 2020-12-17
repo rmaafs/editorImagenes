@@ -26,7 +26,7 @@ class FiltroBlurEdgeDetection : Filtro {
             intArrayOf(-1, 0, 1)
         )
         convolucion.setMatriz(array)
-        convolucion.Factor = 3
+        convolucion.Factor = 2
         convolucion.Offset = 127
         return convolucion.convolucion(bitmap)
     }
