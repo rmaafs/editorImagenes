@@ -5,14 +5,14 @@ import android.graphics.drawable.BitmapDrawable
 import android.widget.ImageView
 import com.pacomedina.uaa.editorimagenes.R
 
-class FiltroBlurSmoothing : Filtro {
+class FiltroBlurMeanRemoval : Filtro {
 
     override fun getNombre(): String {
-        return "Smoothing"
+        return "Mean removal"
     }
 
     override fun getImagen(): Int {
-        return R.drawable.smoothing
+        return R.drawable.mean_removal
     }
 
     override fun click(img: ImageView) : Bitmap {
@@ -21,12 +21,12 @@ class FiltroBlurSmoothing : Filtro {
 
         val convolucion = ConvolucionMatriz()
         val array = arrayOf(
-            intArrayOf(1, 1, 1),
-            intArrayOf(1, 1, 1),
-            intArrayOf(1, 1, 1)
+            intArrayOf(-1, -1, -1),
+            intArrayOf(-1, 9, -1),
+            intArrayOf(-1, -1, -1)
         )
         convolucion.setMatriz(array)
-        convolucion.Factor = 9
+        convolucion.Factor = 1
         convolucion.Offset = 0
         return convolucion.convolucion(bitmap)
     }

@@ -94,16 +94,19 @@ class FiltrosActivity : AppCompatActivity() {
             FiltroControlador(this).setFiltro(FiltroSeparacionRojo()),
             FiltroControlador(this).setFiltro(FiltroSeparacionVerde()),
             FiltroControlador(this).setFiltro(FiltroSeparacionAzul()),
+
+            //Otros
             FiltroControlador(this).setFiltro(FiltroSeparacionMacabro()),
             FiltroControlador(this).setFiltro(FiltroSeparacionArreglarBlancos()),
             FiltroControlador(this).setFiltro(FiltroSeparacionArreglarNegros()),
             FiltroControlador(this).setFiltro(FiltroSeparacionPixeleado()),
             FiltroControlador(this).setFiltro(FiltroSeparacionPantallaRota()),
 
-//            FiltroControlador(this).setFiltro(FiltroZoomIn())
+            //Blurs
             FiltroControlador(this).setFiltro(FiltroBlurSmoothing()),
             FiltroControlador(this).setFiltro(FiltroBlurGaussian()),
-            FiltroControlador(this).setFiltro(FiltroBlurSharpen())
+            FiltroControlador(this).setFiltro(FiltroBlurSharpen()),
+            FiltroControlador(this).setFiltro(FiltroBlurMeanRemoval())
         )
 
         //Ciclamos todo el arreglo
