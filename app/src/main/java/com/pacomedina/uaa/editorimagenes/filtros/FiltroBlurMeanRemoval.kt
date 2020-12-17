@@ -19,15 +19,26 @@ class FiltroBlurMeanRemoval : Filtro {
         val oldBitmap = (img.getDrawable() as BitmapDrawable).bitmap
         val bitmap : Bitmap = oldBitmap.copy(oldBitmap.config, true)
 
-        val convolucion = ConvolucionMatriz()
-        val array = arrayOf(
+//        val convolucion = ConvolucionMatriz()
+//        val array = arrayOf(
+//            intArrayOf(-1, -1, -1),
+//            intArrayOf(-1, 9, -1),
+//            intArrayOf(-1, -1, -1)
+//        )
+//        convolucion.setMatriz(array)
+//        convolucion.Factor = 1
+//        convolucion.Offset = 0
+//        return convolucion.convolucion(bitmap)
+
+        val matrix = ConvolutionMatrix(3)
+        val config = arrayOf(
             intArrayOf(-1, -1, -1),
             intArrayOf(-1, 9, -1),
             intArrayOf(-1, -1, -1)
         )
-        convolucion.setMatriz(array)
-        convolucion.Factor = 1
-        convolucion.Offset = 0
-        return convolucion.convolucion(bitmap)
+        matrix.applyConfig(config)
+        matrix.Factor = 1
+        matrix.Offset = 0
+        return matrix.computeConvolution3x3(bitmap, matrix)
     }
 }
