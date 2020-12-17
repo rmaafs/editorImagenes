@@ -3,7 +3,15 @@ package com.pacomedina.uaa.editorimagenes.filtros
 import android.graphics.Bitmap
 
 
-class ConvolutionMatrix {
+class ConvolucionMatriz {
+
+    /**
+     * Basado en el código de
+     * https://homepages.inf.ed.ac.uk/rbf/HIPR2/flatjavasrc/Convolution.java
+     *
+     * Clase arreglada, adaptada y optimizada por:
+     * Rodrigo Maafs Atilano
+     */
 
     /**
      * Referencias:
@@ -13,13 +21,12 @@ class ConvolutionMatrix {
      * https://www.codeproject.com/Articles/2008/Image-Processing-for-Dummies-with-C-and-GDI-Part-2
      */
 
-    val SIZE = 3
-    var matriz: Array<IntArray> = Array(SIZE) { IntArray(SIZE) }
+    private val SIZE = 3
+    private var matriz: Array<IntArray> = Array(SIZE) { IntArray(SIZE) }
     var Factor = 1
     var Offset = 1
 
-
-    fun applyConfig(config: Array<IntArray>) {
+    fun setMatriz(config: Array<IntArray>) {
         for (x in 0 until SIZE) {
             for (y in 0 until SIZE) {
                 matriz[x][y] = config[x][y]
@@ -27,7 +34,7 @@ class ConvolutionMatrix {
         }
     }
 
-    fun maps(result: Bitmap) : Bitmap {
+    fun convolucion(result: Bitmap) : Bitmap {
         var picw : Int = result.width
         var pich : Int = result.height
         val bitmap : Bitmap = result.copy(result.config, true)

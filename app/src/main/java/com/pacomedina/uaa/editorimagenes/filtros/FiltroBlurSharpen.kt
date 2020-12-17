@@ -19,15 +19,15 @@ class FiltroBlurSharpen : Filtro {
         val oldBitmap = (img.getDrawable() as BitmapDrawable).bitmap
         val bitmap : Bitmap = oldBitmap.copy(oldBitmap.config, true)
 
-        val matrix = ConvolutionMatrix()
+        val matrix = ConvolucionMatriz()
         val config = arrayOf(
             intArrayOf(0, -2, 0),
             intArrayOf(-2, 11, -2),
             intArrayOf(0, -2, 0)
         )
-        matrix.applyConfig(config)
+        matrix.setMatriz(config)
         matrix.Factor = 3
         matrix.Offset = 0
-        return matrix.maps(bitmap)
+        return matrix.convolucion(bitmap)
     }
 }

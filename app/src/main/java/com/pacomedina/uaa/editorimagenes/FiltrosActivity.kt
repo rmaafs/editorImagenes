@@ -101,6 +101,7 @@ class FiltrosActivity : AppCompatActivity() {
             FiltroControlador(this).setFiltro(FiltroSeparacionPantallaRota()),
 
 //            FiltroControlador(this).setFiltro(FiltroZoomIn())
+            FiltroControlador(this).setFiltro(FiltroBlurSmoothing()),
             FiltroControlador(this).setFiltro(FiltroBlurGaussian()),
             FiltroControlador(this).setFiltro(FiltroBlurSharpen())
         )
