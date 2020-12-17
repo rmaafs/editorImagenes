@@ -106,7 +106,8 @@ class FiltrosActivity : AppCompatActivity() {
             FiltroControlador(this).setFiltro(FiltroBlurSmoothing()),
             FiltroControlador(this).setFiltro(FiltroBlurGaussian()),
             FiltroControlador(this).setFiltro(FiltroBlurSharpen()),
-            FiltroControlador(this).setFiltro(FiltroBlurMeanRemoval())
+            FiltroControlador(this).setFiltro(FiltroBlurMeanRemoval()),
+            FiltroControlador(this).setFiltro(FiltroBlurEmbossing())
         )
 
         //Ciclamos todo el arreglo
