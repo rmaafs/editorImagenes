@@ -49,6 +49,8 @@ class ConvolucionMatriz {
         var G = 0
         var B = 0
 
+        var flag = 2;
+
         for (x in 1 until picw - 1) {
             for (y in 1 until pich - 1) {
 
@@ -61,8 +63,15 @@ class ConvolucionMatriz {
                         sumaR += (pix[index] shr 16 and 0xff) * matriz[i + 1][j + 1]
                         sumaG += (pix[index] shr 8 and 0xff) * matriz[i + 1][j + 1]
                         sumaB += (pix[index] and 0xff) * matriz[i + 1][j + 1]
+
+                        if (flag > 0) {
+                            println("${x} X ${y}, ${(y + j)} X ${(x + i)} \t[${i + 1} X ${j + 1}]")
+                        }
                     }
                 }
+
+                println("-----------")
+                flag--
 
                 index = (y) * picw + (x)
                 R = validarValor(sumaR)
